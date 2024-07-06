@@ -1,10 +1,10 @@
 #!/usr/bin/python3
-"""Main script to test number_of_subscribers function"""
 import sys
-from 0-subs import number_of_subscribers
+from subs import number_of_subscribers # Correct import statement
 
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: {} <subreddit>".format(sys.argv[0]))
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        print("Please pass an argument for the subreddit to search.")
     else:
-        print("{:d}".format(number_of_subscribers(sys.argv[1])))
+        subreddit = sys.argv[1]
+        print(number_of_subscribers(subreddit))
