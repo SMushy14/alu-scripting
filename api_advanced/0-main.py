@@ -8,4 +8,3 @@ if __name__ == "__main__":
         print("Usage: {} <subreddit>".format(sys.argv[0]))
     else:
         print("{:d}".format(number_of_subscribers(sys.argv[1])))
-
