@@ -2,6 +2,7 @@
 """Function to query subscribers on a given subreddit"""
 import requests
 
+
 def number_of_subscribers(subreddit):
     """Return number of subscribers on a given subreddit"""
     URL = "https://www.reddit.com/r/{}/about.json".format(subreddit),
