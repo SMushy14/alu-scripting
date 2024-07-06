@@ -4,20 +4,26 @@ import requests
 
 
 def number_of_subscribers(subreddit):
-    """Return the number of subscribers for a given subreddit."""
-    url = f"https://www.reddit.com/dev/api/r/{subreddit}/about.json"
-    headers = {'User-Agent': 'my-user-agent/0.0.1'}
-    
-    try:
-        response = requests.get(url, headers=headers, allow_redirects=False, timeout=10)
-        response.raise_for_status() # Raises HTTPError for bad responses (4xx and 5xx)
-        
-        data = response.json()
-        
-        # Ensure 'data' key exists in the JSON response
-        if 'data' in data:
-            return data['data'].get('subscribers', 0) # Default to 0 if 'subscribers' key is missing
-        else:
-            return 0
-    except requests.RequestException:
+    """Return number of subscribers on a given subreddit"""
+    URL = "https://www.reddit.com/r/{}/about.json".format(subreddit)
+    headers = {
+        "User-Agent": "RedditSubscriberChecker/1.0 (by u/S_mushy14)"
+    }
+    response = requests.get(URL, headers=headers, allow_redirects=False)
+    if response.status_code == 404:
         return 0
+    if response.status_code != 200:
+        print("Error: received status code", response.status_code)
+        return 0
+    try:
+        results = response.json().get("data")
+        return results.get("subscribers", 0)
+    except ValueError:
+        print("Error: received invalid JSON")
+        return 0
+
+# Test cases
+if __name__ == "__main__":
+    import sys
+    subreddit = sys.argv[1]
+    print(number_of_subscribers(subreddit))
